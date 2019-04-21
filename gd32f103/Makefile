@@ -2,7 +2,7 @@
 OBJS = libopencm3-blink.o
 
 # We've got opencm3 in the folder with us
-OPENCM3_DIR := ./libopencm3
+OPENCM3_DIR := ../libopencm3
 
 # Our output name
 BINARY = libopencm3-blink
