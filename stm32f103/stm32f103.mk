@@ -1,22 +1,18 @@
-# We only need to build our one source file
-OBJS = libopencm3-blink.o
+OBJS += $(BINARY).o
 
 # We've got opencm3 in the folder with us
-OPENCM3_DIR := ../libopencm3
-
-# Our output name
-BINARY = libopencm3-blink
+OPENCM3_DIR := ../../libopencm3
 
 # Linker script for our MCU
-LDSCRIPT = gd32f103.ld
+LDSCRIPT = ../stm32f103c8.ld
 
-# Using the GD32F1 series chip
-LIBNAME		= opencm3_gd32f1x0
-DEFS		+= -DGD32F1X0
+# Using the STM32F1 series chip
+LIBNAME		= opencm3_stm32f1
+DEFS		+= -DSTM32F1
 
 # Target-specific flags
 FP_FLAGS	?= -msoft-float
-ARCH_FLAGS	= -mthumb -mcpu=cortex-m3 $(FP_FLAGS)
+ARCH_FLAGS	= -mthumb -mcpu=cortex-m3 $(FP_FLAGS) -mfix-cortex-m3-ldrd
 
 
 # Compiler configuration
@@ -74,7 +70,7 @@ LDLIBS		+= -Wl,--start-group -lc -lgcc -lnosys -Wl,--end-group
 .SECONDEXPANSION:
 .SECONDARY:
 
-all: elf size
+all: elf
 size: $(BINARY).size
 elf: $(BINARY).elf
 bin: $(BINARY).bin
@@ -121,7 +117,7 @@ GENERATED_BINARIES=$(BINARY).elf $(BINARY).bin $(BINARY).hex $(BINARY).srec $(BI
 	{printf("%10s %8s\n", $$1, human($$2))} \
 '
 
-%.flash: %.bin
+%.st-flash: %.bin
 	st-flash write $(*).bin 0x8000000
 
 
