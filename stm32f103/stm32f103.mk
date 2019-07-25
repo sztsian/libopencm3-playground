@@ -62,7 +62,7 @@ endif
 
 # Used libraries
 DEFS		+= -I$(OPENCM3_DIR)/include
-LDFLAGS		+= -L$(OPENCM3_DIR)/lib
+LDFLAGS		+= -L$(OPENCM3_DIR)/lib -g
 LDLIBS		+= -l$(LIBNAME)
 LDLIBS		+= -Wl,--start-group -lc -lgcc -lnosys -Wl,--end-group
 
