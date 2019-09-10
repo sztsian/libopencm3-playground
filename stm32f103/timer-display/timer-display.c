@@ -68,7 +68,11 @@ void timer_setup(void)
 	/* Set timer start value. */
 	TIM_CNT(TIM2) = 1;
 
-	/* Set timer prescaler. 72MHz/1440 => 50000 counts per second. */
+	/* 72MHz/1440 => 50000 counts per second. */
+	// However, ABP1 can be 36MHz maximum, when perpheral clock is 72MHz 
+	// in order to met the 36MHz limit, the clock is divided when offering
+	// into TIM. And then TIM multiple it by 2 so that it can go back to 72MHz.
+	// So, in this way, PSC should be 1440/2 to make it 1 second.
 	TIM_PSC(TIM2) = 1440/2;
 
 	/* End timer value. If this is reached an interrupt is generated. */
