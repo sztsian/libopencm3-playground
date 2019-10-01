@@ -116,10 +116,25 @@ GENERATED_BINARIES=$(BINARY).elf $(BINARY).bin $(BINARY).hex $(BINARY).srec $(BI
     } \
 	{printf("%10s %8s\n", $$1, human($$2))} \
 '
-
 %.st-flash: %.bin
 	st-flash write $(*).bin 0x8000000
 
+st-flash: $(BINARY).bin
+	st-flash write $(BINARY).bin 0x8000000
+
+st-erase:
+	st-flash erase
+
+cmsis-dap-flash: $(BINARY).bin
+	openocd -f interface/cmsis-dap.cfg -c "transport select swd" \
+			-f target/stm32f1x.cfg  -c "init;" \
+			-c "reset halt; stm32f1x mass_erase 0; flash erase_check 0" \
+			-c "flash write_bank 0 $(BINARY).bin 0; reset run; exit"
+
+cmsis-dap-erase: $(BINARY).bin
+	openocd -f interface/cmsis-dap.cfg -c "transport select swd" \
+			-f target/stm32f1x.cfg  -c "init;" \
+			-c "reset halt; stm32f1x mass_erase 0; flash erase_check 0; exit" \
 
 clean:
 	$(RM) $(GENERATED_BINARIES) generated.* $(OBJS) $(OBJS:%.o=%.d)
