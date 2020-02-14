@@ -4,7 +4,7 @@ OBJS += $(BINARY).o
 OPENCM3_DIR := ../../libopencm3
 
 # Linker script for our MCU
-LDSCRIPT = ../stm32f103c8.ld
+LDSCRIPT ?= ../stm32f103c8.ld
 
 # Using the STM32F1 series chip
 LIBNAME		= opencm3_stm32f1

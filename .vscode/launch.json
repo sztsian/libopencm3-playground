@@ -10,7 +10,7 @@
             "executable": "./${fileBasenameNoExtension}.elf",
             "request": "launch",
             "type": "cortex-debug",
-            "servertype": "jlink"
+            "servertype": "stutil"
             "device": "STM32F103C8",
             "interface": "swd",
             "ipAddress": null,
