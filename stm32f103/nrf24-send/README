@@ -1,0 +1,5 @@
+THIS STILL DO NOT WORK!
+
+The code is written for a very special stm32f103 board which has socket for nRF24 module and ESP01 module.
+
+It marked UART1 in parallel with SWD, but actually the so-called UART is PB6 and PB7, which uses Alternative Function and remap.
